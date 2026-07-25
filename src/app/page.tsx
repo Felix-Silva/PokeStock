@@ -32,9 +32,10 @@ export default async function Home() {
               <Link
                 href={`/stores/${store.id}`}
                 style={{ backgroundColor: storeColorBackground(store.color) }}
-                className="block rounded-lg px-4 py-3 hover:brightness-125"
+                className="flex flex-col rounded-lg px-4 py-3 hover:brightness-125"
               >
-                {store.name}
+                <span>{store.name}</span>
+                <span className="text-sm text-zinc-400">{store.address}</span>
               </Link>
             </li>
           ))}

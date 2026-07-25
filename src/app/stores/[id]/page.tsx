@@ -73,7 +73,10 @@ export default async function StorePage(props: PageProps<"/stores/[id]">) {
 
   return (
     <main className="flex flex-1 flex-col items-center gap-8 px-6 py-16">
-      <h1 className="text-3xl font-semibold">{store.name}</h1>
+      <div className="flex flex-col items-center gap-1 text-center">
+        <h1 className="text-3xl font-semibold">{store.name}</h1>
+        <p className="text-zinc-400">{store.address}</p>
+      </div>
 
       <Link
         href={`/stores/${id}/log`}
