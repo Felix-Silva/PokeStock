@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { ToggleSection } from "@/components/ToggleSection";
+import { Heatmap } from "@/components/Heatmap";
+import { buildHeatmap } from "@/lib/heatmap";
 
 type StockCheck = {
   id: string;
@@ -84,6 +86,10 @@ export default async function StorePage(props: PageProps<"/stores/[id]">) {
       >
         + Log Stock Check
       </Link>
+      <div className="center">
+        <Heatmap grid={buildHeatmap(stockChecks)} />
+      </div>
+      
 
       <div className="flex w-full max-w-4xl flex-col gap-6">
         <ToggleSection label="stock check history">

@@ -14,7 +14,7 @@ export function ToggleSection({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="flex w-full flex-col items-start gap-3">
+    <div className="flex w-full flex-col items-center gap-3">
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
