@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { ToggleSection } from "@/components/ToggleSection";
 
 type StockCheck = {
   id: string;
@@ -72,52 +74,64 @@ export default async function StorePage(props: PageProps<"/stores/[id]">) {
   return (
     <main className="flex flex-1 flex-col items-center gap-8 px-6 py-16">
       <h1 className="text-3xl font-semibold">{store.name}</h1>
-      <div className="flex w-full max-w-4xl flex-col gap-8 md:flex-row md:items-start">
-        <table className="w-full border-separate border-spacing-y-2 text-sm">
-          <thead>
-            <tr className="text-left text-zinc-400">
-              <th className="px-4 py-2 font-medium">Date</th>
-              <th className="px-4 py-2 font-medium">Day</th>
-              <th className="px-4 py-2 font-medium">Score</th>
-              <th className="px-4 py-2 font-medium">Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stockChecks.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="px-4 py-3 text-zinc-500">
-                  No stock checks logged yet.
-                </td>
-              </tr>
-            ) : (
-              stockChecks.map((check: StockCheck) => (
-                <tr key={check.id} style={{ backgroundColor: scoreRowBackground(check.score) }}>
-                  <td className="whitespace-nowrap rounded-l-lg px-4 py-3">{formatDateTime(check.checked_at)}</td>
-                  <td className="px-4 py-3">{dayOfWeek(check.checked_at)}</td>
-                  <td className="px-4 py-3 font-semibold">{check.score}</td>
-                  <td className="rounded-r-lg px-4 py-3 text-zinc-400">{check.notes ?? "—"}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
 
-        <table className="w-full max-w-sm shrink-0 border-collapse text-sm">
-          <thead>
-            <tr className="border-b border-zinc-700 text-left text-zinc-400">
-              <th className="py-2 pr-4 font-medium">Observation</th>
-              <th className="py-2 font-medium">Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {scoringRubric.map((row) => (
-              <tr key={row.score} className="border-b border-zinc-800">
-                <td className="py-2 pr-4">{row.observation}</td>
-                <td className="py-2">{row.score}</td>
+      <Link
+        href={`/stores/${id}/log`}
+        className="rounded-lg bg-zinc-50 px-4 py-2 font-medium text-zinc-950 hover:bg-zinc-200"
+      >
+        + Log Stock Check
+      </Link>
+
+      <div className="flex w-full max-w-4xl flex-col gap-6">
+        <ToggleSection label="stock check history">
+          <table className="w-full border-separate border-spacing-y-2 text-sm">
+            <thead>
+              <tr className="text-left text-zinc-400">
+                <th className="px-4 py-2 font-medium">Date</th>
+                <th className="px-4 py-2 font-medium">Day</th>
+                <th className="px-4 py-2 font-medium">Score</th>
+                <th className="px-4 py-2 font-medium">Notes</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {stockChecks.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="px-4 py-3 text-zinc-500">
+                    No stock checks logged yet.
+                  </td>
+                </tr>
+              ) : (
+                stockChecks.map((check: StockCheck) => (
+                  <tr key={check.id} style={{ backgroundColor: scoreRowBackground(check.score) }}>
+                    <td className="whitespace-nowrap rounded-l-lg px-4 py-3">{formatDateTime(check.checked_at)}</td>
+                    <td className="px-4 py-3">{dayOfWeek(check.checked_at)}</td>
+                    <td className="px-4 py-3 font-semibold">{check.score}</td>
+                    <td className="rounded-r-lg px-4 py-3 text-zinc-400">{check.notes ?? "—"}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </ToggleSection>
+
+        <ToggleSection label="score guide">
+          <table className="w-full max-w-sm border-collapse text-sm">
+            <thead>
+              <tr className="border-b border-zinc-700 text-left text-zinc-400">
+                <th className="py-2 pr-4 font-medium">Observation</th>
+                <th className="py-2 font-medium">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scoringRubric.map((row) => (
+                <tr key={row.score} className="border-b border-zinc-800">
+                  <td className="py-2 pr-4">{row.observation}</td>
+                  <td className="py-2">{row.score}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </ToggleSection>
       </div>
     </main>
   );
