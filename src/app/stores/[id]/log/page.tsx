@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { DateTimeLocalField } from "@/components/DateTimeLocalField";
 
 export default async function LogStockCheckPage(props: PageProps<"/stores/[id]/log">) {
   const { id } = await props.params;
@@ -29,18 +30,7 @@ export default async function LogStockCheckPage(props: PageProps<"/stores/[id]/l
     <main className="flex flex-1 flex-col items-center gap-8 px-6 py-16">
       <h1 className="text-3xl font-semibold">Log Stock Check</h1>
       <form action={createStockCheck} className="flex w-full max-w-md flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="checked_at" className="text-sm text-zinc-400">
-            Date &amp; time
-          </label>
-          <input
-            id="checked_at"
-            name="checked_at"
-            type="datetime-local"
-            required
-            className="rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-600"
-          />
-        </div>
+        <DateTimeLocalField name="checked_at" label="Date & time" />
         <div className="flex flex-col gap-1">
           <label htmlFor="score" className="text-sm text-zinc-400">
             Score (0-10)
