@@ -14,8 +14,6 @@ export default async function Home() {
 
   return (
     <main className="flex flex-1 flex-col items-center gap-8 px-6 py-16">
-      <h1 className="text-3xl font-semibold">PokeStock</h1>
-
       <Link
         href="/stores/new"
         className="rounded-lg bg-zinc-50 px-4 py-2 font-medium text-zinc-950 hover:bg-zinc-200"
