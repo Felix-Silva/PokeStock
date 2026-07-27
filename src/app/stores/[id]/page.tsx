@@ -63,7 +63,7 @@ export default async function StorePage(props: PageProps<"/stores/[id]">) {
 
       <div className="flex w-full max-w-4xl flex-col gap-6">
         <ToggleSection label="stock check history">
-          <StockCheckTable stockChecks={stockChecks} />
+          <StockCheckTable stockChecks={stockChecks} storeId={id} />
         </ToggleSection>
 
         <ToggleSection label="score guide">

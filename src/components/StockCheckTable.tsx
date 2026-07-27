@@ -1,5 +1,7 @@
 "use client";
 
+import { deleteStockCheck } from "@/lib/stockChecks";
+
 type StockCheck = {
   id: string;
   checked_at: string;
@@ -31,7 +33,13 @@ function scoreRowBackground(score: number): string {
   return `rgba(${r}, ${g}, ${b}, 0.15)`;
 }
 
-export function StockCheckTable({ stockChecks }: { stockChecks: StockCheck[] }) {
+export function StockCheckTable({
+  stockChecks,
+  storeId,
+}: {
+  stockChecks: StockCheck[];
+  storeId: string;
+}) {
   return (
     <table className="w-full border-separate border-spacing-y-2 text-sm">
       <thead>
@@ -40,12 +48,13 @@ export function StockCheckTable({ stockChecks }: { stockChecks: StockCheck[] }) 
           <th className="px-4 py-2 font-medium">Day</th>
           <th className="px-4 py-2 font-medium">Score</th>
           <th className="px-4 py-2 font-medium">Notes</th>
+          <th className="px-4 py-2 font-medium" />
         </tr>
       </thead>
       <tbody>
         {stockChecks.length === 0 ? (
           <tr>
-            <td colSpan={4} className="px-4 py-3 text-zinc-500">
+            <td colSpan={5} className="px-4 py-3 text-zinc-500">
               No stock checks logged yet.
             </td>
           </tr>
@@ -55,7 +64,21 @@ export function StockCheckTable({ stockChecks }: { stockChecks: StockCheck[] }) 
               <td className="whitespace-nowrap rounded-l-lg px-4 py-3">{formatDateTime(check.checked_at)}</td>
               <td className="px-4 py-3">{dayOfWeek(check.checked_at)}</td>
               <td className="px-4 py-3 font-semibold">{check.score}</td>
-              <td className="rounded-r-lg px-4 py-3 text-zinc-400">{check.notes ?? "—"}</td>
+              <td className="px-4 py-3 text-zinc-400">{check.notes ?? "—"}</td>
+              <td className="rounded-r-lg px-4 py-3 text-right">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm("Delete this stock check? This can't be undone.")) {
+                      deleteStockCheck(check.id, storeId);
+                    }
+                  }}
+                  className="text-zinc-500 hover:text-red-400"
+                  aria-label="Delete stock check"
+                >
+                  ✕
+                </button>
+              </td>
             </tr>
           ))
         )}
