@@ -5,6 +5,7 @@ import { ToggleSection } from "@/components/ToggleSection";
 import { Heatmap } from "@/components/Heatmap";
 import { StockCheckTable } from "@/components/StockCheckTable";
 import { storeColorHex } from "@/lib/stores";
+import { StoreActionsMenu } from "@/components/StoreActionsMenu";
 
 type RubricRow = {
   observation: string;
@@ -45,7 +46,10 @@ export default async function StorePage(props: PageProps<"/stores/[id]">) {
 
   return (
     <main className="flex flex-1 flex-col items-center gap-8 px-6 py-16">
-      <div className="flex flex-col items-center gap-1 text-center">
+      <div className="relative flex w-full max-w-md flex-col items-center gap-1 text-center">
+        <div className="absolute right-0 top-0">
+          <StoreActionsMenu storeId={id} />
+        </div>
         <h1 className="text-3xl font-semibold" style={{ color: storeColorHex(store.color) }}>
           {store.name}
         </h1>
