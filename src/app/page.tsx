@@ -2,6 +2,8 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { storeColorBackground, type Store } from "@/lib/stores";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const { data: stores, error } = await supabase
     .from("stores")
