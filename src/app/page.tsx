@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { storeColorBackground, type Store } from "@/lib/stores";
-import { ToggleSection } from "@/components/ToggleSection";
 
 export const dynamic = "force-dynamic";
 
